@@ -1,0 +1,34 @@
+datasets:
+  market1501:
+    name: "Market-1501"
+    root: "data/market1501/Market-1501-v15.09.15"
+    train_dir: "bounding_box_train"
+    query_dir: "query"
+    gallery_dir: "bounding_box_test"
+    gt_dir: "gt_bbox"
+    num_cameras: 6
+    num_train_ids: 751
+    num_test_ids: 750
+    total_ids: 1501
+    source_url: "https://github.com/doosik71/market-1501"
+
+  msmt17:
+    name: "MSMT17"
+    root: "data/msmt17/MSMT17_V1"
+    train_dir: "train"
+    test_dir: "test"
+    list_train: "list_train.txt"
+    list_val: "list_val.txt"
+    list_query: "list_query.txt"
+    list_gallery: "list_gallery.txt"
+    num_cameras: 15
+    num_identities: 4101
+    official_contact: "slzhang.jdl@pku.edu.cn"
+    official_url: "https://www.pkuvmc.com/dataset/dataset.html"
+
+preprocessing:
+  image_size: [256, 128] # [height, width]
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  batch_size: 32
+  num_workers: 2

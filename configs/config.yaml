@@ -1,0 +1,68 @@
+pipeline:
+  name: "M2-ReID: Adaptive Multi-Model Cross-Camera Person Re-Identification"
+  version: "1.0.0"
+  random_seed: 42
+  device: "auto" # 'cuda', 'cpu', or 'auto'
+
+detection:
+  model_type: "yolov8"
+  confidence_threshold: 0.45
+  nms_iou_threshold: 0.45
+  classes: [0] # 0 = person
+
+tracking:
+  tracker_type: "bytetrack" # 'bytetrack' or 'botsort'
+  track_high_thresh: 0.5
+  track_low_thresh: 0.1
+  new_track_thresh: 0.6
+  track_buffer: 30
+  match_thresh: 0.8
+  aspect_ratio_thresh: 1.6
+  min_box_area: 100
+
+retrieval:
+  index_type: "IndexFlatIP" # Inner Product / Cosine distance for normalized embeddings
+  top_k: 10
+  use_gpu: false
+  similarity_metric: "cosine"
+  reranking:
+    enabled: true
+    k1: 20
+    k2: 6
+    lambda_val: 0.3
+    weights:
+      appearance: 0.60
+      pose: 0.15
+      temporal: 0.15
+      camera_transition: 0.10
+
+temporal:
+  max_travel_time: 600 # seconds between adjacent camera views
+  min_travel_time: 2 # minimum physical transit time
+  camera_transition_matrix:
+    # Transition probability priors between cameras (e.g. Market 6 cameras)
+    # 0 = impossible, 1 = direct transition
+    c1: { c1: 0.2, c2: 0.9, c3: 0.4, c4: 0.1, c5: 0.1, c6: 0.05 }
+    c2: { c1: 0.9, c2: 0.2, c3: 0.8, c4: 0.3, c5: 0.1, c6: 0.05 }
+    c3: { c1: 0.4, c2: 0.8, c3: 0.2, c4: 0.8, c5: 0.3, c6: 0.1 }
+    c4: { c1: 0.1, c2: 0.3, c3: 0.8, c4: 0.2, c5: 0.9, c6: 0.4 }
+    c5: { c1: 0.1, c2: 0.1, c3: 0.3, c4: 0.9, c5: 0.2, c6: 0.9 }
+    c6: { c1: 0.05, c2: 0.05, c3: 0.1, c4: 0.4, c5: 0.9, c6: 0.2 }
+
+identity_management:
+  gallery_similarity_threshold: 0.70
+  new_identity_threshold: 0.55
+  max_gallery_exemplars_per_id: 8
+  min_quality_score: 0.45
+  quality_weighted_update: true
+
+calibration:
+  method: "temperature_scaling" # 'platt' or 'temperature_scaling'
+  temperature: 1.8
+  prior_match_probability: 0.05
+
+paths:
+  results_dir: "results"
+  checkpoints_dir: "checkpoints"
+  logs_dir: "results/logs"
+  plots_dir: "results/plots"

@@ -1,0 +1,195 @@
+{
+  "experiment_id": "clip_market1501",
+  "timestamp": "2026-10-07 07:58:18",
+  "dataset": "Market-1501",
+  "model": "CLIP",
+  "random_seed": 42,
+  "configuration": {
+    "pipeline": {
+      "name": "M2-ReID: Adaptive Multi-Model Cross-Camera Person Re-Identification",
+      "version": "1.0.0",
+      "random_seed": 42,
+      "device": "auto"
+    },
+    "detection": {
+      "model_type": "yolov8",
+      "confidence_threshold": 0.45,
+      "nms_iou_threshold": 0.45,
+      "classes": [
+        0
+      ]
+    },
+    "tracking": {
+      "tracker_type": "bytetrack",
+      "track_high_thresh": 0.5,
+      "track_low_thresh": 0.1,
+      "new_track_thresh": 0.6,
+      "track_buffer": 30,
+      "match_thresh": 0.8,
+      "aspect_ratio_thresh": 1.6,
+      "min_box_area": 100
+    },
+    "retrieval": {
+      "index_type": "IndexFlatIP",
+      "top_k": 10,
+      "use_gpu": false,
+      "similarity_metric": "cosine",
+      "reranking": {
+        "enabled": true,
+        "k1": 20,
+        "k2": 6,
+        "lambda_val": 0.3,
+        "weights": {
+          "appearance": 0.6,
+          "pose": 0.15,
+          "temporal": 0.15,
+          "camera_transition": 0.1
+        }
+      }
+    },
+    "temporal": {
+      "max_travel_time": 600,
+      "min_travel_time": 2,
+      "camera_transition_matrix": {
+        "c1": {
+          "c1": 0.2,
+          "c2": 0.9,
+          "c3": 0.4,
+          "c4": 0.1,
+          "c5": 0.1,
+          "c6": 0.05
+        },
+        "c2": {
+          "c1": 0.9,
+          "c2": 0.2,
+          "c3": 0.8,
+          "c4": 0.3,
+          "c5": 0.1,
+          "c6": 0.05
+        },
+        "c3": {
+          "c1": 0.4,
+          "c2": 0.8,
+          "c3": 0.2,
+          "c4": 0.8,
+          "c5": 0.3,
+          "c6": 0.1
+        },
+        "c4": {
+          "c1": 0.1,
+          "c2": 0.3,
+          "c3": 0.8,
+          "c4": 0.2,
+          "c5": 0.9,
+          "c6": 0.4
+        },
+        "c5": {
+          "c1": 0.1,
+          "c2": 0.1,
+          "c3": 0.3,
+          "c4": 0.9,
+          "c5": 0.2,
+          "c6": 0.9
+        },
+        "c6": {
+          "c1": 0.05,
+          "c2": 0.05,
+          "c3": 0.1,
+          "c4": 0.4,
+          "c5": 0.9,
+          "c6": 0.2
+        }
+      }
+    },
+    "identity_management": {
+      "gallery_similarity_threshold": 0.7,
+      "new_identity_threshold": 0.55,
+      "max_gallery_exemplars_per_id": 8,
+      "min_quality_score": 0.45,
+      "quality_weighted_update": true
+    },
+    "calibration": {
+      "method": "temperature_scaling",
+      "temperature": 1.8,
+      "prior_match_probability": 0.05
+    },
+    "paths": {
+      "results_dir": "results",
+      "checkpoints_dir": "checkpoints",
+      "logs_dir": "results/logs",
+      "plots_dir": "results/plots"
+    }
+  },
+  "metrics": {
+    "rank1": 26.67,
+    "rank5": 46.67,
+    "rank10": 50.0,
+    "mAP": 19.9,
+    "cmc_curve": [
+      0.2666666805744171,
+      0.2666666805744171,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.46666666865348816,
+      0.46666666865348816,
+      0.46666666865348816,
+      0.46666666865348816,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.6000000238418579,
+      0.6000000238418579,
+      0.6000000238418579,
+      0.6000000238418579,
+      0.699999988079071,
+      0.699999988079071,
+      0.699999988079071,
+      0.699999988079071,
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      0.8666666746139526,
+      0.8666666746139526,
+      0.8666666746139526,
+      0.8666666746139526,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421,
+      0.9666666388511658,
+      0.9666666388511658,
+      0.9666666388511658,
+      0.9666666388511658,
+      0.9666666388511658,
+      0.9666666388511658,
+      0.9666666388511658,
+      0.9666666388511658,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "latency_ms": 289.58,
+    "fps": 3.5,
+    "gpu_memory_mb": 0.0,
+    "cpu_memory_mb": -2.5
+  },
+  "environment": {
+    "os": "Windows",
+    "os_release": "11",
+    "python_version": "3.14.0",
+    "torch_version": "2.12.1+cpu",
+    "cuda_available": false,
+    "cuda_version": null,
+    "device_name": "CPU",
+    "cpu_count": 12
+  }
+}

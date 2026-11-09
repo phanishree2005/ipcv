@@ -1,0 +1,98 @@
+{
+  "blur_1": {
+    "description": "Blur (Level 1, k=3)",
+    "osnet_r1": 36.67,
+    "osnet_map": 25.96,
+    "adapt_r1": 6.67,
+    "adapt_map": 16.37,
+    "delta_r1": -30.0
+  },
+  "blur_2": {
+    "description": "Blur (Level 2, k=5)",
+    "osnet_r1": 36.67,
+    "osnet_map": 26.4,
+    "adapt_r1": 6.67,
+    "adapt_map": 16.48,
+    "delta_r1": -30.0
+  },
+  "blur_3": {
+    "description": "Blur (Level 3, k=7)",
+    "osnet_r1": 40.0,
+    "osnet_map": 27.25,
+    "adapt_r1": 6.67,
+    "adapt_map": 16.86,
+    "delta_r1": -33.33
+  },
+  "blur_4": {
+    "description": "Blur (Level 4, k=9)",
+    "osnet_r1": 40.0,
+    "osnet_map": 27.55,
+    "adapt_r1": 6.67,
+    "adapt_map": 16.88,
+    "delta_r1": -33.33
+  },
+  "brightness_low_0.4": {
+    "description": "Low Brightness (0.4x)",
+    "osnet_r1": 13.33,
+    "osnet_map": 9.43,
+    "adapt_r1": 13.33,
+    "adapt_map": 9.56,
+    "delta_r1": 0.0
+  },
+  "brightness_high_1.6": {
+    "description": "High Brightness (1.6x)",
+    "osnet_r1": 10.0,
+    "osnet_map": 11.53,
+    "adapt_r1": 23.33,
+    "adapt_map": 14.12,
+    "delta_r1": 13.33
+  },
+  "contrast_0.4": {
+    "description": "Low Contrast (0.4x)",
+    "osnet_r1": 66.67,
+    "osnet_map": 32.08,
+    "adapt_r1": 16.67,
+    "adapt_map": 18.75,
+    "delta_r1": -50.0
+  },
+  "occlusion_0.1": {
+    "description": "Occlusion (10% Area)",
+    "osnet_r1": 23.33,
+    "osnet_map": 20.31,
+    "adapt_r1": 6.67,
+    "adapt_map": 15.39,
+    "delta_r1": -16.66
+  },
+  "occlusion_0.25": {
+    "description": "Occlusion (25% Area)",
+    "osnet_r1": 6.67,
+    "osnet_map": 17.35,
+    "adapt_r1": 6.67,
+    "adapt_map": 12.62,
+    "delta_r1": 0.0
+  },
+  "occlusion_0.4": {
+    "description": "Occlusion (40% Area)",
+    "osnet_r1": 13.33,
+    "osnet_map": 13.82,
+    "adapt_r1": 3.33,
+    "adapt_map": 9.14,
+    "delta_r1": -10.0
+  },
+  "low_res_2": {
+    "description": "Low Resolution (2x Downsample)",
+    "osnet_r1": 36.67,
+    "osnet_map": 25.78,
+    "adapt_r1": 6.67,
+    "adapt_map": 16.32,
+    "delta_r1": -30.0
+  },
+  "low_res_4": {
+    "description": "Low Resolution (4x Downsample)",
+    "osnet_r1": 36.67,
+    "osnet_map": 26.99,
+    "adapt_r1": 6.67,
+    "adapt_map": 16.7,
+    "delta_r1": -30.0
+  }
+}

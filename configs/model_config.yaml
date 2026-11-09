@@ -1,0 +1,92 @@
+models:
+  osnet:
+    name: "OSNet"
+    type: "cnn"
+    embedding_dim: 512
+    backbone: "osnet_x1_0"
+    pretrained: true
+    input_size: [256, 128]
+    feature_norm: true
+    description: "Omni-Scale Network for fine-grained multi-scale person representation"
+
+  transreid:
+    name: "TransReID"
+    type: "transformer"
+    embedding_dim: 768
+    backbone: "vit_base_patch16_224_reid"
+    patch_size: 16
+    stride_size: [12, 12]
+    camera_embed: true
+    view_embed: true
+    input_size: [256, 128]
+    feature_norm: true
+    description: "Transformer-based Re-ID with side information embedding and jigsaw patch shuffling"
+
+  clip:
+    name: "CLIP"
+    type: "vision_language"
+    embedding_dim: 512
+    backbone: "ViT-B/16"
+    pretrained: true
+    input_size: [224, 224]
+    feature_norm: true
+    description: "Complementary zero-shot / pre-trained visual representation from vision-language foundation model"
+
+pose:
+  name: "PoseEstimator"
+  num_keypoints: 17
+  keypoint_names:
+    - "nose"
+    - "left_eye"
+    - "right_eye"
+    - "left_ear"
+    - "right_ear"
+    - "left_shoulder"
+    - "right_shoulder"
+    - "left_elbow"
+    - "right_elbow"
+    - "left_wrist"
+    - "right_wrist"
+    - "left_hip"
+    - "right_hip"
+    - "left_knee"
+    - "right_knee"
+    - "left_ankle"
+    - "right_ankle"
+  feature_dim: 34 # 17 * 2 normalized coordinates
+  confidence_threshold: 0.3
+
+quality:
+  metrics:
+    - "blur_laplacian"
+    - "brightness"
+    - "contrast"
+    - "detection_confidence"
+    - "bbox_area"
+    - "aspect_ratio"
+    - "occlusion_score"
+  feature_dim: 7
+
+fusion:
+  fixed:
+    default_weights: [0.40, 0.40, 0.20] # OSNet, TransReID, CLIP
+    tested_weights:
+      - [0.333, 0.333, 0.334] # Uniform
+      - [0.50, 0.30, 0.20]    # CNN heavy
+      - [0.30, 0.50, 0.20]    # Transformer heavy
+      - [0.40, 0.40, 0.20]    # Balanced high-performance
+      - [0.45, 0.45, 0.10]    # Low CLIP weight
+
+  adaptive:
+    hidden_dim: 256
+    quality_dim: 7
+    pose_dim: 34
+    dropout: 0.1
+    fused_dim: 512 # Projection output dimension
+    learning_rate: 0.0003
+    weight_decay: 0.0001
+    loss_weights:
+      triplet_loss: 1.0
+      cross_entropy: 1.0
+      center_loss: 0.0005
+      diversity_reg: 0.05

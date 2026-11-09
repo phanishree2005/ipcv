@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Node & Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+.npm
+npm-debug.log*
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Heavy Datasets & Generated Artifacts
+data/market1501/
+data/msmt17/
+*.pkl
+*.npz
+*.npy
+results/*.mp4
+results/uploads/

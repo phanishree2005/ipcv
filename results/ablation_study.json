@@ -1,0 +1,32 @@
+[
+  {
+    "stage": "1. Baseline (OSNet)",
+    "rank1": 16.67,
+    "mAP": 21.59
+  },
+  {
+    "stage": "2. + Multi-Model Fusion",
+    "rank1": 3.33,
+    "mAP": 12.17
+  },
+  {
+    "stage": "3. + Adaptive Gating",
+    "rank1": 3.33,
+    "mAP": 13.12
+  },
+  {
+    "stage": "4. + Pose Information",
+    "rank1": 3.33,
+    "mAP": 12.98
+  },
+  {
+    "stage": "5. + Temporal Reasoning",
+    "rank1": 3.83,
+    "mAP": 13.58
+  },
+  {
+    "stage": "6. + Re-Ranking",
+    "rank1": 3.3299999237060547,
+    "mAP": 12.95
+  }
+]

@@ -1,0 +1,550 @@
+{
+  "video_path": "data/demo_videos/cam1_demo.mp4",
+  "camera_id": 1,
+  "total_frames_processed": 90,
+  "total_detections": 0,
+  "unique_identities_count": 0,
+  "identity_summaries": [],
+  "frame_records": [
+    {
+      "frame_idx": 1,
+      "timestamp": 0.07,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 2,
+      "timestamp": 0.13,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 3,
+      "timestamp": 0.2,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 4,
+      "timestamp": 0.27,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 5,
+      "timestamp": 0.33,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 6,
+      "timestamp": 0.4,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 7,
+      "timestamp": 0.47,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 8,
+      "timestamp": 0.53,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 9,
+      "timestamp": 0.6,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 10,
+      "timestamp": 0.67,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 11,
+      "timestamp": 0.73,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 12,
+      "timestamp": 0.8,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 13,
+      "timestamp": 0.87,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 14,
+      "timestamp": 0.93,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 15,
+      "timestamp": 1.0,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 16,
+      "timestamp": 1.07,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 17,
+      "timestamp": 1.13,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 18,
+      "timestamp": 1.2,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 19,
+      "timestamp": 1.27,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 20,
+      "timestamp": 1.33,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 21,
+      "timestamp": 1.4,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 22,
+      "timestamp": 1.47,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 23,
+      "timestamp": 1.53,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 24,
+      "timestamp": 1.6,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 25,
+      "timestamp": 1.67,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 26,
+      "timestamp": 1.73,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 27,
+      "timestamp": 1.8,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 28,
+      "timestamp": 1.87,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 29,
+      "timestamp": 1.93,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 30,
+      "timestamp": 2.0,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 31,
+      "timestamp": 2.07,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 32,
+      "timestamp": 2.13,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 33,
+      "timestamp": 2.2,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 34,
+      "timestamp": 2.27,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 35,
+      "timestamp": 2.33,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 36,
+      "timestamp": 2.4,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 37,
+      "timestamp": 2.47,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 38,
+      "timestamp": 2.53,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 39,
+      "timestamp": 2.6,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 40,
+      "timestamp": 2.67,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 41,
+      "timestamp": 2.73,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 42,
+      "timestamp": 2.8,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 43,
+      "timestamp": 2.87,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 44,
+      "timestamp": 2.93,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 45,
+      "timestamp": 3.0,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 46,
+      "timestamp": 3.07,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 47,
+      "timestamp": 3.13,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 48,
+      "timestamp": 3.2,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 49,
+      "timestamp": 3.27,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 50,
+      "timestamp": 3.33,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 51,
+      "timestamp": 3.4,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 52,
+      "timestamp": 3.47,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 53,
+      "timestamp": 3.53,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 54,
+      "timestamp": 3.6,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 55,
+      "timestamp": 3.67,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 56,
+      "timestamp": 3.73,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 57,
+      "timestamp": 3.8,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 58,
+      "timestamp": 3.87,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 59,
+      "timestamp": 3.93,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 60,
+      "timestamp": 4.0,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 61,
+      "timestamp": 4.07,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 62,
+      "timestamp": 4.13,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 63,
+      "timestamp": 4.2,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 64,
+      "timestamp": 4.27,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 65,
+      "timestamp": 4.33,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 66,
+      "timestamp": 4.4,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 67,
+      "timestamp": 4.47,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 68,
+      "timestamp": 4.53,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 69,
+      "timestamp": 4.6,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 70,
+      "timestamp": 4.67,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 71,
+      "timestamp": 4.73,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 72,
+      "timestamp": 4.8,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 73,
+      "timestamp": 4.87,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 74,
+      "timestamp": 4.93,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 75,
+      "timestamp": 5.0,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 76,
+      "timestamp": 5.07,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 77,
+      "timestamp": 5.13,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 78,
+      "timestamp": 5.2,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 79,
+      "timestamp": 5.27,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 80,
+      "timestamp": 5.33,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 81,
+      "timestamp": 5.4,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 82,
+      "timestamp": 5.47,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 83,
+      "timestamp": 5.53,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 84,
+      "timestamp": 5.6,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 85,
+      "timestamp": 5.67,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 86,
+      "timestamp": 5.73,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 87,
+      "timestamp": 5.8,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 88,
+      "timestamp": 5.87,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 89,
+      "timestamp": 5.93,
+      "tracked_count": 0,
+      "persons": []
+    },
+    {
+      "frame_idx": 90,
+      "timestamp": 6.0,
+      "tracked_count": 0,
+      "persons": []
+    }
+  ]
+}
