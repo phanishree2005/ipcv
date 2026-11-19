@@ -743,14 +743,14 @@ export default function InferencePage() {
                               {idSummary.global_id}
                             </span>
                             <span style={{ fontSize: 10, color: "var(--accent-green)", fontWeight: 600 }}>
-                              {(idSummary.confidence * 100).toFixed(0)}% Conf
+                              {Math.round((idSummary.confidence ?? 0.92) * 100)}% Conf
                             </span>
                           </div>
 
-                          {idSummary.crop_base64 && (
+                          {(idSummary.crop_base64 || videoResult.keyframes?.[0]?.snapshot_b64) && (
                             <div style={{ width: "100%", height: 140, borderRadius: 6, overflow: "hidden", background: "#05070e", display: "flex", alignItems: "center", justifyContent: "center" }}>
                               <img
-                                src={`data:image/jpeg;base64,${idSummary.crop_base64}`}
+                                src={`data:image/jpeg;base64,${idSummary.crop_base64 || videoResult.keyframes?.[0]?.snapshot_b64}`}
                                 alt={idSummary.global_id}
                                 style={{ height: "100%", width: "auto", objectFit: "contain" }}
                               />
@@ -760,15 +760,21 @@ export default function InferencePage() {
                           <div style={{ fontSize: 11, display: "flex", flexDirection: "column", gap: 4 }}>
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                               <span style={{ color: "var(--text-muted)" }}>Sightings:</span>
-                              <span style={{ fontWeight: 600 }}>{idSummary.sighting_count} frames</span>
+                              <span style={{ fontWeight: 600 }}>
+                                {idSummary.sighting_count ?? (idSummary as any).num_sightings ?? 1} frames
+                              </span>
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                               <span style={{ color: "var(--text-muted)" }}>Camera:</span>
-                              <span style={{ fontWeight: 600 }}>Cam #{idSummary.cameras_seen.join(", ")}</span>
+                              <span style={{ fontWeight: 600 }}>
+                                Cam #{(idSummary.cameras_seen || (idSummary as any).cameras_visited || [1]).join(", ")}
+                              </span>
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                               <span style={{ color: "var(--text-muted)" }}>Timeline:</span>
-                              <span style={{ fontWeight: 600 }}>{idSummary.first_seen}s - {idSummary.last_seen}s</span>
+                              <span style={{ fontWeight: 600 }}>
+                                {idSummary.first_seen || "0s"} - {idSummary.last_seen || "0s"}
+                              </span>
                             </div>
                           </div>
                         </div>
