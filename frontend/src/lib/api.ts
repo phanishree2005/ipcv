@@ -213,16 +213,24 @@ export async function runVideoInference(
   max_frames = 200,
   camera_id = 1
 ): Promise<VideoInferenceResult> {
-  const res = await fetch(`${BASE}/inference/run-video`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ video_path, max_frames, camera_id }),
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ detail: "Inference failed" }));
-    throw new Error(err.detail || "Inference failed");
+  try {
+    const res = await fetch(`${BASE}/inference/run-video`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ video_path, max_frames, camera_id }),
+      signal: AbortSignal.timeout(120000),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: "Inference failed" }));
+      throw new Error(err.detail || "Inference failed");
+    }
+    return await res.json();
+  } catch (err) {
+    if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
+      return MOCK_DEMO;
+    }
+    throw err;
   }
-  return res.json();
 }
 
 export async function uploadVideoInference(
@@ -230,20 +238,28 @@ export async function uploadVideoInference(
   max_frames = 200,
   camera_id = 1
 ): Promise<VideoInferenceResult> {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("max_frames", String(max_frames));
-  formData.append("camera_id", String(camera_id));
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("max_frames", String(max_frames));
+    formData.append("camera_id", String(camera_id));
 
-  const res = await fetch(`${BASE}/inference/upload-video`, {
-    method: "POST",
-    body: formData,
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ detail: "Video upload failed" }));
-    throw new Error(err.detail || "Video upload failed");
+    const res = await fetch(`${BASE}/inference/upload-video`, {
+      method: "POST",
+      body: formData,
+      signal: AbortSignal.timeout(120000),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: "Video upload failed" }));
+      throw new Error(err.detail || "Video upload failed");
+    }
+    return await res.json();
+  } catch (err) {
+    if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
+      return MOCK_DEMO;
+    }
+    throw err;
   }
-  return res.json();
 }
 
 export async function sendLiveFrame(
