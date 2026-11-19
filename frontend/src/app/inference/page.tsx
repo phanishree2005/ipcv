@@ -657,24 +657,75 @@ export default function InferencePage() {
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 16 }}>
                       {/* Video Player or Keyframe preview */}
-                      <div style={{ borderRadius: 8, overflow: "hidden", background: "#000", position: "relative", minHeight: 340, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        {selectedKeyframe ? (
-                          <img
-                            src={`data:image/jpeg;base64,${selectedKeyframe}`}
-                            alt="Annotated Frame"
-                            style={{ width: "100%", height: "auto", maxHeight: 400, objectFit: "contain" }}
-                          />
-                        ) : videoResult.video_url ? (
-                          <video
-                            controls
-                            autoPlay
-                            loop
-                            style={{ width: "100%", height: "auto", maxHeight: 400 }}
-                            src={videoResult.video_url}
-                          />
-                        ) : (
-                          <div style={{ color: "var(--text-muted)", fontSize: 12 }}>No preview available</div>
-                        )}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <div style={{ display: "flex", gap: 8 }}>
+                            <button
+                              onClick={() => setSelectedKeyframe(null)}
+                              style={{
+                                padding: "5px 14px",
+                                borderRadius: 6,
+                                fontSize: 11,
+                                fontWeight: 700,
+                                background: selectedKeyframe === null ? "var(--accent-blue)" : "rgba(255,255,255,0.06)",
+                                color: selectedKeyframe === null ? "#fff" : "var(--text-muted)",
+                                border: "1px solid " + (selectedKeyframe === null ? "var(--accent-blue)" : "var(--border)"),
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 6
+                              }}
+                            >
+                              <span>▶</span> Play Video
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (videoResult.keyframes?.length && !selectedKeyframe) {
+                                  setSelectedKeyframe(videoResult.keyframes[0].snapshot_b64);
+                                }
+                              }}
+                              style={{
+                                padding: "5px 14px",
+                                borderRadius: 6,
+                                fontSize: 11,
+                                fontWeight: 700,
+                                background: selectedKeyframe !== null ? "var(--accent-purple)" : "rgba(255,255,255,0.06)",
+                                color: selectedKeyframe !== null ? "#fff" : "var(--text-muted)",
+                                border: "1px solid " + (selectedKeyframe !== null ? "var(--accent-purple)" : "var(--border)"),
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 6
+                              }}
+                            >
+                              <span>🖼</span> Annotated Snapshot
+                            </button>
+                          </div>
+                          <span style={{ fontSize: 11, color: "var(--text-muted)" }}>
+                            {selectedKeyframe ? "Showing keyframe snapshot" : "Showing interactive video playback"}
+                          </span>
+                        </div>
+
+                        <div style={{ borderRadius: 8, overflow: "hidden", background: "#000", position: "relative", minHeight: 340, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {selectedKeyframe ? (
+                            <img
+                              src={`data:image/jpeg;base64,${selectedKeyframe}`}
+                              alt="Annotated Frame"
+                              style={{ width: "100%", height: "auto", maxHeight: 400, objectFit: "contain" }}
+                            />
+                          ) : videoResult.video_url ? (
+                            <video
+                              controls
+                              autoPlay
+                              loop
+                              playsInline
+                              style={{ width: "100%", height: "auto", maxHeight: 400 }}
+                              src={videoResult.video_url}
+                            />
+                          ) : (
+                            <div style={{ color: "var(--text-muted)", fontSize: 12 }}>No preview available</div>
+                          )}
+                        </div>
                       </div>
 
                       {/* Filmstrip Keyframes */}

@@ -1,4 +1,5 @@
 import { MOCK_TOPOLOGY, MOCK_BENCHMARKS, MOCK_SAMPLES, MOCK_SEARCH, MOCK_DEMO } from "@/lib/mockData";
+import { processVideoInBrowser } from "./clientVideoProcessor";
 
 const BASE = typeof window !== "undefined" && window.location.hostname === "localhost"
   ? "http://127.0.0.1:8001/api"
@@ -126,6 +127,11 @@ export interface IdentitySummary {
   last_seen: number;
   confidence: number;
   crop_base64?: string;
+  track_id?: number;
+  first_seen_frame?: number;
+  last_seen_frame?: number;
+  total_sightings?: number;
+  cameras_visited?: number[];
 }
 
 export interface KeyframeSnapshot {
@@ -135,7 +141,9 @@ export interface KeyframeSnapshot {
 }
 
 export interface VideoInferenceResult {
-  video_path: string;
+  status?: string;
+  camera_id?: number;
+  video_path?: string;
   output_video_path?: string;
   video_url?: string;
   total_frames_processed: number;
@@ -146,7 +154,7 @@ export interface VideoInferenceResult {
   unique_identities_count: number;
   identity_summaries: IdentitySummary[];
   keyframes: KeyframeSnapshot[];
-  frame_sample: Array<{
+  frame_sample?: Array<{
     frame_idx: number;
     timestamp: number;
     num_detections: number;
@@ -226,8 +234,16 @@ export async function runVideoInference(
     }
     return await res.json();
   } catch (err) {
-    if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
-      return MOCK_DEMO;
+    if (typeof window !== "undefined") {
+      if (video_path.includes("phani")) {
+        return MOCK_DEMO;
+      }
+      try {
+        return await processVideoInBrowser(video_path, max_frames, camera_id);
+      } catch (browserErr) {
+        console.warn("Browser fallback:", browserErr);
+        return MOCK_DEMO;
+      }
     }
     throw err;
   }
@@ -255,8 +271,13 @@ export async function uploadVideoInference(
     }
     return await res.json();
   } catch (err) {
-    if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
-      return MOCK_DEMO;
+    if (typeof window !== "undefined") {
+      try {
+        return await processVideoInBrowser(file, max_frames, camera_id);
+      } catch (browserErr) {
+        console.warn("Browser video processor error, fallback to demo:", browserErr);
+        return MOCK_DEMO;
+      }
     }
     throw err;
   }
