@@ -208,6 +208,8 @@ export interface RetrievalSample {
   cam: number;
   seq: number;
   thumbnail_b64: string;
+  is_video_sighting?: boolean;
+  label?: string;
 }
 
 export interface RetrievalResultItem {
