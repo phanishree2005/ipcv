@@ -14,3 +14,4 @@ if str(ROOT) not in sys.path:
 # Launch dashboard/app.py
 dashboard_app = ROOT / "dashboard" / "app.py"
 runpy.run_path(str(dashboard_app), run_name="__main__")
+

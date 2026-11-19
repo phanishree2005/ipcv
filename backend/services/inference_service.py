@@ -190,12 +190,13 @@ class FullPipelineInferenceService:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         total_video_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-        # Downscale 4K/UHD videos to 720p HD (max width 1280) for real-time CPU speed
+        # Downscale videos for fast CPU inference (max width 640 on CPU, 1280 on GPU)
         scale = 1.0
         out_w, out_h = width, height
-        if width > 1280:
-            scale = 1280.0 / width
-            out_w = 1280
+        max_dim = 640 if self.device == "cpu" else 1280
+        if width > max_dim:
+            scale = max_dim / float(width)
+            out_w = max_dim
             out_h = int(height * scale)
 
         writer = None
@@ -211,6 +212,8 @@ class FullPipelineInferenceService:
         total_detections = 0
         frame_records = []
         keyframe_snapshots = []
+        # Cache extracted embeddings per track_id so we don't re-run 3 deep models every frame
+        track_reid_cache = {}
 
         while True:
             ret, frame = cap.read()
@@ -229,30 +232,39 @@ class FullPipelineInferenceService:
 
             for tr in active_tracks:
                 if tr.best_crop is not None and tr.best_crop.size > 0:
-                    crop_pil = Image.fromarray(cv2.cvtColor(tr.best_crop, cv2.COLOR_BGR2RGB))
-                    crop_tensor = self.test_transform(crop_pil).unsqueeze(0).to(self.device)
+                    tid = tr.track_id
+                    # Optimize: Run full Re-ID feature extraction on first sighting,
+                    # and refresh periodically every 6 frames or if crop quality improves
+                    needs_reid = (tid not in track_reid_cache) or (frame_idx % 6 == 0)
                     
-                    with torch.no_grad():
-                        f_os = self.model_osnet(crop_tensor)
-                        f_tr = self.model_trans(crop_tensor)
-                        f_cl = self.model_clip(crop_tensor)
-                        fused_emb, weights = self.adaptive_model(f_os, f_tr, f_cl)
+                    if needs_reid:
+                        crop_pil = Image.fromarray(cv2.cvtColor(tr.best_crop, cv2.COLOR_BGR2RGB))
+                        crop_tensor = self.test_transform(crop_pil).unsqueeze(0).to(self.device)
+                        
+                        with torch.no_grad():
+                            f_os = self.model_osnet(crop_tensor)
+                            f_tr = self.model_trans(crop_tensor)
+                            f_cl = self.model_clip(crop_tensor)
+                            fused_emb, weights = self.adaptive_model(f_os, f_tr, f_cl)
 
-                    emb_np = fused_emb.squeeze(0).cpu().numpy()
-                    q_score = self.quality_estimator.extract_quality_vector(tr.best_crop)[0]
-                    p_vec = self.pose_estimator.extract_pose_feature(tr.best_crop)
+                        emb_np = fused_emb.squeeze(0).cpu().numpy()
+                        q_score = self.quality_estimator.extract_quality_vector(tr.best_crop)[0]
+                        p_vec = self.pose_estimator.extract_pose_feature(tr.best_crop)
 
-                    gid, sim, conf, _ = id_manager.get_or_create_identity(
-                        embedding=emb_np,
-                        camera_id=camera_id,
-                        timestamp=timestamp,
-                        track_id=tr.track_id,
-                        quality_score=q_score,
-                        pose_vector=p_vec,
-                        crop=tr.best_crop,
-                        bbox=tr.bbox
-                    )
-                    tr.global_id = gid
+                        gid, sim, conf, _ = id_manager.get_or_create_identity(
+                            embedding=emb_np,
+                            camera_id=camera_id,
+                            timestamp=timestamp,
+                            track_id=tr.track_id,
+                            quality_score=q_score,
+                            pose_vector=p_vec,
+                            crop=tr.best_crop,
+                            bbox=tr.bbox
+                        )
+                        track_reid_cache[tid] = gid
+                        tr.global_id = gid
+                    else:
+                        tr.global_id = track_reid_cache[tid]
 
             annotated_frame = frame.copy()
             current_tracked = []

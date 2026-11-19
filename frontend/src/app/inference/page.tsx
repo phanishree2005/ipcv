@@ -121,8 +121,9 @@ export default function InferencePage() {
   const startLiveWebcam = async () => {
     setLiveError(null);
     try {
+      setIsLiveActive(true);
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } },
+        video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 25 } },
         audio: false,
       });
 
@@ -134,10 +135,17 @@ export default function InferencePage() {
         };
       }
 
-      await resetLiveSession().catch(() => {});
-      setIsLiveActive(true);
+      resetLiveSession().catch(() => {});
     } catch (err: any) {
-      setLiveError("Webcam access error: " + (err.message || "Permission denied / No device found"));
+      setIsLiveActive(false);
+      const msg = err.message || "";
+      if (msg.includes("Permission") || err.name === "NotAllowedError") {
+        setLiveError("Camera permission blocked: Click the lock / camera icon in your browser address bar and choose 'Allow camera'.");
+      } else if (err.name === "NotFoundError" || msg.includes("device not found")) {
+        setLiveError("No physical webcam detected on this device. You can test live surveillance using the Video File Inference tab!");
+      } else {
+        setLiveError("Webcam error: " + (msg || "Could not access camera. Please allow camera permissions."));
+      }
     }
   };
 
@@ -425,38 +433,52 @@ export default function InferencePage() {
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
                       <label style={{ fontSize: 11, color: "var(--text-muted)" }}>
-                        Camera ID
+                        Camera Selection
                       </label>
-                      <div style={{ display: "flex", gap: 4 }}>
+                      <div style={{ display: "flex", gap: 6 }}>
                         <button
                           type="button"
-                          onClick={() => setCameraId(1)}
+                          onClick={() => {
+                            setCameraId(1);
+                            setUploadFile(null);
+                            const cam1 = sampleVideos.find(v => v.name.includes("12879951") || v.name.includes("phani") || v.name.toLowerCase().includes("cam1"));
+                            if (cam1) setSelectedVideoPath(cam1.path);
+                            else if (sampleVideos.length > 0) setSelectedVideoPath(sampleVideos[0].path);
+                          }}
                           style={{
-                            padding: "2px 6px",
-                            fontSize: 10,
+                            padding: "3px 8px",
+                            fontSize: 11,
+                            fontWeight: 700,
                             borderRadius: 4,
-                            background: cameraId === 1 ? "var(--accent-blue)" : "rgba(255,255,255,0.1)",
+                            background: cameraId === 1 ? "var(--accent-blue)" : "rgba(255,255,255,0.08)",
                             color: "#fff",
-                            border: "none",
+                            border: cameraId === 1 ? "1px solid var(--accent-blue)" : "1px solid var(--border)",
                             cursor: "pointer"
                           }}
                         >
-                          Cam 1
+                          📹 Cam 1
                         </button>
                         <button
                           type="button"
-                          onClick={() => setCameraId(2)}
+                          onClick={() => {
+                            setCameraId(2);
+                            setUploadFile(null);
+                            const cam2 = sampleVideos.find(v => v.name.includes("14292841") || v.name.includes("14365420") || v.name.includes("16583019") || v.name.toLowerCase().includes("cam2"));
+                            if (cam2) setSelectedVideoPath(cam2.path);
+                            else if (sampleVideos.length > 1) setSelectedVideoPath(sampleVideos[1].path);
+                          }}
                           style={{
-                            padding: "2px 6px",
-                            fontSize: 10,
+                            padding: "3px 8px",
+                            fontSize: 11,
+                            fontWeight: 700,
                             borderRadius: 4,
-                            background: cameraId === 2 ? "var(--accent-cyan)" : "rgba(255,255,255,0.1)",
-                            color: "#fff",
-                            border: "none",
+                            background: cameraId === 2 ? "var(--accent-cyan)" : "rgba(255,255,255,0.08)",
+                            color: cameraId === 2 ? "#000" : "#fff",
+                            border: cameraId === 2 ? "1px solid var(--accent-cyan)" : "1px solid var(--border)",
                             cursor: "pointer"
                           }}
                         >
-                          Cam 2
+                          📹 Cam 2
                         </button>
                       </div>
                     </div>
@@ -477,6 +499,9 @@ export default function InferencePage() {
                         fontSize: 12
                       }}
                     />
+                    <div style={{ fontSize: 10, color: "var(--accent-cyan)", marginTop: 4 }}>
+                      Active: Camera #{cameraId} ({selectedVideoPath ? selectedVideoPath.split("/").pop() : (uploadFile ? uploadFile.name : "Custom upload")})
+                    </div>
                   </div>
                 </div>
 
