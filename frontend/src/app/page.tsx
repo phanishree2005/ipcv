@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchDatasets, fetchDatasetStats, DatasetStats } from "@/lib/api";
+import { fetchHealth, fetchDatasets, fetchDatasetStats, DatasetStats } from "@/lib/api";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar
@@ -54,7 +54,7 @@ export default function DashboardPage() {
     async function load() {
       try {
         const [h, names] = await Promise.all([
-          fetch("/api/health").then(r => r.json()),
+          fetchHealth(),
           fetchDatasets(),
         ]);
         setHealth(h);
