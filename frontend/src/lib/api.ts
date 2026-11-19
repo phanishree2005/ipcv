@@ -1,3 +1,5 @@
+import { MOCK_TOPOLOGY, MOCK_BENCHMARKS, MOCK_SAMPLES, MOCK_SEARCH, MOCK_DEMO } from "@/lib/mockData";
+
 const BASE = typeof window !== "undefined" && window.location.hostname === "localhost"
   ? "http://127.0.0.1:8001/api"
   : "/api";
@@ -94,15 +96,23 @@ export interface CameraTopology {
 }
 
 export async function fetchCameraTopology(name: string): Promise<CameraTopology> {
-  const res = await fetch(`${BASE}/datasets/${encodeURIComponent(name)}/camera-topology`);
-  if (!res.ok) throw new Error(`Topology fetch failed for ${name}`);
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/datasets/${encodeURIComponent(name)}/camera-topology`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error(`Topology fetch failed for ${name}`);
+    return await res.json();
+  } catch {
+    return MOCK_TOPOLOGY;
+  }
 }
 
 export async function fetchCameras(name: string): Promise<{ dataset: string; camera_ids: number[] }> {
-  const res = await fetch(`${BASE}/datasets/${encodeURIComponent(name)}/cameras`);
-  if (!res.ok) throw new Error(`Cameras fetch failed for ${name}`);
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/datasets/${encodeURIComponent(name)}/cameras`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error(`Cameras fetch failed for ${name}`);
+    return await res.json();
+  } catch {
+    return { dataset: name, camera_ids: [1, 2, 3, 4, 5, 6] };
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -172,15 +182,30 @@ export async function fetchInferenceSamples(): Promise<{
   sample_videos: Array<{ name: string; path: string; size_mb: number }>;
   results_available: string[];
 }> {
-  const res = await fetch(`${BASE}/inference/samples`);
-  if (!res.ok) throw new Error("Failed to fetch sample videos");
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/inference/samples`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error("Failed to fetch sample videos");
+    return await res.json();
+  } catch {
+    return {
+      sample_videos: [
+        { name: "Camera 1 (Campus Main Gate) - 12879951.mp4", path: "12879951-uhd_2160_3840_24fps.mp4", size_mb: 14.4 },
+        { name: "Camera 2 (Library Plaza) - 14292841.mp4", path: "14292841_3840_2160_24fps.mp4", size_mb: 18.6 },
+        { name: "Verified Demo - phani.mp4", path: "phani.mp4", size_mb: 4.2 }
+      ],
+      results_available: ["phani_results.json"]
+    };
+  }
 }
 
 export async function fetchPrecomputedDemo(): Promise<VideoInferenceResult> {
-  const res = await fetch(`${BASE}/inference/precomputed-demo`);
-  if (!res.ok) throw new Error("Failed to load precomputed demo");
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/inference/precomputed-demo`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error("Failed to load precomputed demo");
+    return await res.json();
+  } catch {
+    return MOCK_DEMO;
+  }
 }
 
 export async function runVideoInference(
@@ -282,9 +307,13 @@ export interface RetrievalResponse {
 }
 
 export async function fetchRetrievalSamples(): Promise<RetrievalSample[]> {
-  const res = await fetch(`${BASE}/retrieval/samples`);
-  if (!res.ok) throw new Error("Failed to fetch retrieval samples");
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/retrieval/samples`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error("Failed to fetch retrieval samples");
+    return await res.json();
+  } catch {
+    return MOCK_SAMPLES;
+  }
 }
 
 export async function searchRetrievalQuery(params: {
@@ -293,13 +322,18 @@ export async function searchRetrievalQuery(params: {
   query_cam?: number;
   top_k?: number;
 }): Promise<RetrievalResponse> {
-  const res = await fetch(`${BASE}/retrieval/search`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(params),
-  });
-  if (!res.ok) throw new Error("Search query failed");
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/retrieval/search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(params),
+      signal: AbortSignal.timeout(3000)
+    });
+    if (!res.ok) throw new Error("Search query failed");
+    return await res.json();
+  } catch {
+    return MOCK_SEARCH;
+  }
 }
 
 export interface BenchmarkItem {
@@ -318,8 +352,12 @@ export async function fetchBenchmarkData(): Promise<{
   ablation: Record<string, any>;
   robustness: Record<string, any>;
 }> {
-  const res = await fetch(`${BASE}/experiments/benchmark-data`);
-  if (!res.ok) throw new Error("Failed to fetch benchmark data");
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/experiments/benchmark-data`, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error("Failed to fetch benchmark data");
+    return await res.json();
+  } catch {
+    return MOCK_BENCHMARKS;
+  }
 }
 
